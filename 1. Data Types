@@ -1,0 +1,7 @@
+1. Changing a column's data type
+
+CAST (value AS data type)
+CONVERT(data type, value)
+
+SELECT CAST(funding_total_usd AS varchar) AS funding_total_usd_string
+FROM tutorial.crunchbase_companies_clean_date
