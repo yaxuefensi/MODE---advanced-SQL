@@ -1,0 +1,53 @@
+LEFT(string, number of characteristics)
+RIGHT(string, number of characteristics)
+
+CONCAT (a,b,c)
+SELECT incidnt_num,
+       day_of_week,
+       LEFT(date, 10) AS cleaned_date,
+       CONCAT(day_of_week, ', ', LEFT(date, 10)) AS day_and_date
+  FROM tutorial.sf_crime_incidents_2014_01
+
+
+  SELECT incidnt_num,
+           date,
+           SUBSTR(date, 7, 4) || '-' || LEFT(date, 2) || '-' || SUBSTR(date, 4, 2) AS cleaned_date
+      FROM tutorial.sf_crime_incidents_2014_01
+      
+ 
+ SELECT incidnt_num,
+       address,
+       UPPER(address) AS address_upper,
+       LOWER(address) AS address_lower
+  FROM tutorial.sf_crime_incidents_2014_01
+  
+  
+  SELECT cleaned_date,
+       EXTRACT('year'   FROM cleaned_date) AS year,
+       EXTRACT('month'  FROM cleaned_date) AS month,
+       EXTRACT('day'    FROM cleaned_date) AS day,
+       EXTRACT('hour'   FROM cleaned_date) AS hour,
+       EXTRACT('minute' FROM cleaned_date) AS minute,
+       EXTRACT('second' FROM cleaned_date) AS second,
+       EXTRACT('decade' FROM cleaned_date) AS decade,
+       EXTRACT('dow'    FROM cleaned_date) AS day_of_week
+  FROM tutorial.sf_crime_incidents_cleandate
+  
+  
+ SELECT CURRENT_DATE AS date,
+       CURRENT_TIME AS time,
+       CURRENT_TIMESTAMP AS timestamp,
+       LOCALTIME AS localtime,
+       LOCALTIMESTAMP AS localtimestamp,
+       NOW() AS now;
+       
+#In cases like this, you can use COALESCE to replace the null values:
+
+SELECT incidnt_num,
+       descript,
+       COALESCE(descript, 'No Description')
+  FROM tutorial.sf_crime_incidents_cleandate
+ ORDER BY descript DESC
+       
+       
+   
