@@ -1,0 +1,60 @@
+1.
+SELECT sub.*
+  FROM (
+        SELECT *
+          FROM tutorial.sf_crime_incidents_2014_01
+         WHERE day_of_week = 'Friday'
+       ) sub
+ WHERE sub.resolution = 'NONE'
+ 
+ 
+ 2. Using subqueries to aggregate in multiple stages
+ 
+ SELECT LEFT(sub.date, 2) AS cleaned_month,
+       sub.day_of_week,
+       AVG(sub.incidents) AS average_incidents
+  FROM (
+        SELECT day_of_week,
+               date,
+               COUNT(incidnt_num) AS incidents
+          FROM tutorial.sf_crime_incidents_2014_01
+         GROUP BY 1,2
+       ) sub
+ GROUP BY 1,2
+ ORDER BY 1,2
+ 
+ 
+ 3. Subqueries in conditional logic
+ SELECT *
+  FROM tutorial.sf_crime_incidents_2014_01
+ WHERE Date = (SELECT MIN(date)
+                 FROM tutorial.sf_crime_incidents_2014_01
+              )
+
+
+4. Joining subqueries
+SELECT *
+  FROM tutorial.sf_crime_incidents_2014_01 incidents
+  JOIN ( SELECT date
+           FROM tutorial.sf_crime_incidents_2014_01
+          ORDER BY date
+          LIMIT 5
+       ) sub
+    ON incidents.date = sub.date
+    
+
+5. Union
+
+SELECT COUNT(*) AS total_rows
+  FROM (
+        SELECT *
+          FROM tutorial.crunchbase_investments_part1
+
+         UNION ALL
+
+        SELECT *
+          FROM tutorial.crunchbase_investments_part2
+       ) sub
+       
+       
+ 
